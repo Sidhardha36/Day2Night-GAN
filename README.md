@@ -1,54 +1,37 @@
-📘 Day2Night-GAN — Pix2Pix Image-to-Image Translation
-🌙 Convert Day Images → Night Images using GANs (Pix2Pix)
+# 🌙 Day2Night-GAN — Pix2Pix Image-to-Image Translation
 
-This project implements a Pix2Pix Generative Adversarial Network that converts daytime images into nighttime images using paired training data.
+This project implements a **Pix2Pix GAN** that converts **daytime images → nighttime images** using a paired dataset.  
 
-It includes:
+A complete ML pipeline is included:
+-  PyTorch training pipeline  
+-  Clean U-Net Generator  
+-  PatchGAN Discriminator  
+-  Streamlit UI for inference  
+-  Auto-pairing & renaming utilities  
+-  Model checkpoint saving  
+-  Clean project structure for portfolios  
 
-- Full PyTorch training pipeline
-- Clean U-Net Generator
-- PatchGAN Discriminator
-- Streamlit Web App for inference
-- Dataset pairing + renaming utilities
-- Model checkpoint saving
-- Clear visualization outputs
+---
 
-🧠 Overview
+## 🔥 Demo Results (Upload images manually)
 
-Pix2Pix is a conditional GAN that learns a mapping:
-
-Day Image  →  Generator  →  Night Image
-
-
-Key components:
-
-Generator: U-Net (skip connections preserve spatial detail)
-
-Discriminator: 70×70 PatchGAN
-
-Loss: Adversarial Loss + L1 Loss
-
-Input size: 128×128
-
-
-
-🔥 Demo Results (Sample Outputs)
-
-Upload your generated results manually into your repo:
-
-outputs/
- ├── samples/      # GAN training snapshots
- └── inference/    # Final prediction results
-
-
-Example layout in README:
-
+```
 Day Image → Generated Night → Real Night
+```
 
+Upload sample outputs inside:
 
-(You can embed images manually using Markdown)
+```
+outputs/
+ ├── samples/      # Training sample outputs
+ └── inference/    # Prediction results
+```
 
-📂 Project Structure
+---
+
+## 📂 Project Structure
+
+```txt
 Day2Night-GAN/
 │
 ├── models/
@@ -61,145 +44,179 @@ Day2Night-GAN/
 │   └── __init__.py
 │
 ├── ui/
-│   └── app.py                  # Streamlit UI
+│   └── app.py                # Streamlit UI
 │
 ├── outputs/
-│   ├── samples/                # Training samples
-│   ├── inference/              # Prediction results
-│   └── G_epoch_10.pth          # Model weights (ignored by Git)
+│   ├── samples/              # GAN training outputs
+│   ├── inference/            # Generated night images
+│   └── G_epoch_10.pth        # Trained model weights
 │
-├── train_A/                    # Day images (training)
-├── train_B/                    # Night images (training)
-├── test_A/                     # Day images (testing)
-├── test_B/                     # Night images (testing)
+├── train_A/                  # Day images (training)
+├── train_B/                  # Night images (training)
+├── test_A/                   # Day images (testing)
+├── test_B/                   # Night images (testing)
 │
-├── predict.py                  # Inference script
-├── rename_pairs.py             # Dataset file pairing utility
-│
+├── predict.py                # Inference script
+├── rename_pairs.py           # Dataset pairing utility
 ├── .gitignore
 └── README.md
+```
 
-⚙️ Model Architecture
-🏗 Generator — U-Net
+---
 
-8-level encoder–decoder
+## ⚙️ Model Architecture
 
-Skip connections
+### 🌀 Generator — U-Net  
+- 8-level encoder–decoder  
+- Skip connections  
+- Tanh output  
 
-Output activation: Tanh
+### 🟥 Discriminator — 70×70 PatchGAN  
+- Evaluates local patches instead of whole image  
+- More stable than full-image discriminator  
 
-Works well for image→image translation
+---
 
-🔍 Discriminator — 70×70 PatchGAN
+## 🗂 Dataset
 
-Classifies local patches instead of entire image
+Model expects **paired day–night images**.
 
-More stable than full-image discriminator
+Preprocessing used:
 
-Produces the “Patch” realism map
+- Resize → 150×150  
+- RandomCrop → 128×128  
+- Normalize → [-1, 1]
 
-🗂 Dataset
+Pairing utility:
 
-Uses a paired Day/Night dataset:
-
-Each Day image has a matching Night image
-
-Preprocessing steps:
-1.Resize (150,150)
-2.RandomCrop (128)
-3.Normalize
-
-Custom renaming script ensures filenames match:
-
+```
 rename_pairs.py
+```
 
-🏋️‍♂️ Training the Model
+---
 
-Run training:
+## 🏋️ Training
 
+Run:
+
+```bash
 python training/train.py
+```
 
+Outputs:
 
-Training outputs:
+- Loss values printed in console  
+- Samples every 200 steps → `outputs/samples/`
+- Checkpoints → `outputs/G_epoch_X.pth`
 
-Loss prints (Generator & Discriminator)
+---
 
-Sample results saved every 200 batches
+## 🔮 Inference (Prediction)
 
-Model checkpoints:
+Generate night version of any day image:
 
-outputs/G_epoch_X.pth
-outputs/D_epoch_X.pth
-
-🔮 Inference (Prediction)
-
-Generate night image from a day image:
-
+```bash
 python predict.py
+```
 
+Outputs saved in:
 
-Result saved in:
-
+```
 outputs/inference/
+```
 
-🌐 Streamlit Web App
+---
 
-Launch UI:
+## 🌐 Streamlit Web App
 
+Run:
+
+```bash
 streamlit run ui/app.py
-
+```
 
 Features:
 
-Upload daytime image
+- Upload any day image  
+- View generated night output  
+- Download result  
+- Clean minimal UI  
 
-Generate nighttime image
+---
 
-Download final result
+## 🚀 How to Run
 
-Clean modern interface
+### 1️⃣ Create virtual environment
 
-🚀 How to Run the Project
-1️⃣ Create virtual environment
+```bash
 python -m venv env
 env\Scripts\activate
+```
+### 2️⃣ Clone the Repository
 
-2️⃣ Install dependencies
+Clone the project to your local machine:
+
+```bash
+git clone https://github.com/Sidhardha36/Day2Night-GAN.git
+cd Day2Night-GAN
+```
+
+### 3️⃣ Install dependencies
+
+```bash
 pip install torch torchvision pillow tqdm streamlit
+```
 
-3️⃣ Train the model
+### 4️⃣ Train model
+
+```bash
 python training/train.py
+```
 
-4️⃣ Run inference
+### 5️⃣ Prediction
+
+```bash
 python predict.py
+```
 
-5️⃣ Run Streamlit UI
+### 6️⃣Run the UI
+
+```bash
 streamlit run ui/app.py
+```
 
-⭐ Features
+---
 
-1. Stable 128×128 Pix2Pix GAN
-2. Clean U-Net generator
-3. PatchGAN discriminator
-4. Full training pipeline
-5. Streamlit web interface
-6. Works on real paired dataset
-7. Perfect for portfolio & resume
+## ⭐ Features
 
-🧭 Future Improvements
+-  Stable 128×128 Pix2Pix GAN  
+-  Clean U-Net implementation  
+-  PatchGAN discriminator  
+-  Full training pipeline  
+-  Streamlit UI  
+-  Ready for resume + GitHub  
+-  Real paired dataset  
 
-🔹 Upgrade training to 256×256 resolution
-🔹 Add reverse model: Night → Day
-🔹 Deploy on HuggingFace Spaces / Streamlit Cloud
-🔹 Add CycleGAN version
-🔹 Add gradient penalty / training stabilization
+---
 
-👨‍💻 Author
+## 🧭 Future Improvements
 
-Sidhardha Varma
-B.Tech — Machine Learning Enthusiast
-Day-to-Night GAN Project (2025)
+- 256×256 training  
+- Night → Day reverse model  
+- Deploy on Streamlit Cloud / HuggingFace  
+- Convert to CycleGAN version  
 
-🏆 License
+---
 
-This project is open-source under the MIT License.
+## 👤 Author
+
+**Sidhardha Varma**  
+B.Tech | Machine Learning Enthusiast  
+Day-to-Night GAN — 2025  
+
+---
+
+## 🏆 License
+
+MIT License
+
