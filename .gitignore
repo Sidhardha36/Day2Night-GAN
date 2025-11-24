@@ -1,0 +1,39 @@
+# -------------------------
+# Virtual Environment
+# -------------------------
+env/
+evnv/
+venv/
+
+# -------------------------
+# Cache & system files
+# -------------------------
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# -------------------------
+# Model weights
+# -------------------------
+*.pth
+*.pt
+
+# -------------------------
+# Output images (optional)
+# Comment these lines if you want to push some outputs
+# -------------------------
+outputs/samples/*
+outputs/inference/*
+
+# -------------------------
+# VS Code settings
+# -------------------------
+.vscode/
+
+# -------------------------
+# Lists created for renaming
+# -------------------------
+listA.txt
+listB.txt
