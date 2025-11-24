@@ -17,11 +17,11 @@ class Discriminator(nn.Module):
             return nn.Sequential(*layers)
 
         self.model = nn.Sequential(
-            block(in_channels * 2, 64, norm=False),  # 128→64
-            block(64, 128),                          # 64→32
-            block(128, 256),                         # 32→16
-            block(256, 512),                         # 16→8
-            nn.Conv2d(512, 1, 4, 1, 1),              # Patch output
+            block(in_channels * 2, 64, norm=False),  
+            block(64, 128),                          
+            block(128, 256),                         
+            block(256, 512),                         
+            nn.Conv2d(512, 1, 4, 1, 1),              
         )
 
     def forward(self, a, b):
