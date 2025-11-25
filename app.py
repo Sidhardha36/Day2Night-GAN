@@ -5,9 +5,8 @@ from torchvision import transforms
 from models.generator import GeneratorUNet
 import os
 
-# -------------------------
+
 # Load model
-# -------------------------
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Load Generator
@@ -39,9 +38,8 @@ def generate_night(img):
     return transforms.ToPILImage()(fake.cpu())
 
 
-# -------------------------
+
 # Streamlit UI
-# -------------------------
 st.title("🌙 Day → Night Image Translation (Pix2Pix GAN)")
 st.markdown("Upload a daytime image and convert it into night-time using your trained GAN model.")
 
