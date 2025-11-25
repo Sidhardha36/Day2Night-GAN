@@ -6,9 +6,8 @@ import os
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-# ------------------------
+
 # Load Generator
-# ------------------------
 generator = GeneratorUNet().to(device)
 
 # Load last checkpoint (G_epoch_10.pth)
@@ -18,9 +17,8 @@ generator.eval()
 
 print("Loaded model:", checkpoint)
 
-# ------------------------
+
 # Preprocessing (match training)
-# ------------------------
 transform = transforms.Compose([
     transforms.Resize((150, 150)),
     transforms.CenterCrop(128),
@@ -29,9 +27,8 @@ transform = transforms.Compose([
                          (0.5, 0.5, 0.5)),
 ])
 
-# ------------------------
+
 # Predict Function
-# ------------------------
 def generate_night(input_path):
     img = Image.open(input_path).convert("RGB")
     img = transform(img).unsqueeze(0).to(device)
@@ -50,9 +47,8 @@ def generate_night(input_path):
     print("Saved:", output_path)
 
 
-# ------------------------
+
 # Run demo
-# ------------------------
 if __name__ == "__main__":
-    test_image = "test_A/0a42ee8c-13838721.jpg"   # put your day image here
+    test_image = "test_A/0a42ee8c-13838721.jpg"   # Try with different day image
     generate_night(test_image)
