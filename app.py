@@ -40,7 +40,7 @@ def generate_night(img):
 
 
 # Streamlit UI
-st.title("🌙 Day → Night Image Translation (Pix2Pix GAN)")
+st.title(" Day → Night Image Translation (Pix2Pix GAN)")
 st.markdown("Upload a daytime image and convert it into night-time using your trained GAN model.")
 
 uploaded_file = st.file_uploader("Upload a Day Image", type=["jpg", "jpeg", "png"])
@@ -48,14 +48,14 @@ uploaded_file = st.file_uploader("Upload a Day Image", type=["jpg", "jpeg", "png
 if uploaded_file is not None:
     input_image = Image.open(uploaded_file).convert("RGB")
 
-    st.subheader("📸 Input Image")
+    st.subheader(" Input Image")
     st.image(input_image, width=300)
 
-    if st.button("Convert to Night 🌙"):
+    if st.button("Convert to Night "):
         with st.spinner("Generating night image... please wait"):
             output_image = generate_night(input_image)
 
-        st.subheader("🌌 Output Night Image")
+        st.subheader(" Output Night Image")
         st.image(output_image, width=300)
 
         # Save output
